@@ -38,26 +38,42 @@ const MainContent = styled.main`
   padding: 2rem;
 `;
 
+const HeaderLink = styled.a`
+  text-decoration: none;
+  padding: 0.75rem 1.5rem;
+  color: #212121;
+  transition: all 0.3s;
+  border-radius: 6px;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+`;
+
 const Root = () => {
-  const { login } = useLogin() as ILoginCheck;
-  console.log('login.currentUser', login.currentUser);
+  const { login, setLogin, logout } = useLogin() as ILoginCheck;
+  const onLogout = () => {
+    setLogin(logout);
+  };
   return (
     <Container>
-      {login.currentUser ? (
+      {login?.token && (
         <aside>
           <Link to="/dashboard">Dashboard</Link>
           <Link to="/users">Users</Link>
         </aside>
-      ) : (
-        <aside>
-          <Link to="/">Home</Link>
-        </aside>
       )}
       <Content>
-        <Header>
-          <div>Header</div>
-          <div>User Info</div>
-        </Header>
+        {login?.token && (
+          <Header>
+            <div>Header</div>
+            <div>
+              <span>{login.currentUser}</span>
+              <HeaderLink href={'#'} onClick={onLogout}>
+                Logout
+              </HeaderLink>
+            </div>
+          </Header>
+        )}
         <MainContent>
           <Outlet />
         </MainContent>

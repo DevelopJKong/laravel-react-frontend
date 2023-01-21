@@ -41,7 +41,7 @@ const Router = () => {
   const loginRoute = createBrowserRouter([
     {
       path: '/',
-      element: login?.currentUser ? <Root /> : <Navigate to="/" />,
+      element: login?.token ? <Root /> : <Navigate to="/" />,
       children: [
         {
           path: '',

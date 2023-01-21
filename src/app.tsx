@@ -7,7 +7,7 @@ function App() {
   const { loginRoute, logoutRoute } = Router();
   return (
     <>
-      <RouterProvider router={login?.currentUser ? loginRoute : logoutRoute} />
+      <RouterProvider router={login?.token ? loginRoute : logoutRoute} />
     </>
   );
 }
