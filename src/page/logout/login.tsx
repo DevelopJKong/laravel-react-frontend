@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const Container = styled.div`
+export const Container = styled.div`
   height: 90vh;
   display: flex;
   justify-content: center;
@@ -10,7 +10,7 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-const Form = styled.form`
+export const Form = styled.form`
   width: 360px;
   position: relative;
   z-index: 1;
@@ -20,14 +20,14 @@ const Form = styled.form`
   box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.1);
 `;
 
-const Title = styled.p`
+export const Title = styled.p`
   font-size: 24px;
   margin-bottom: 20px;
 `;
 
-const Input = styled.input``;
+export const Input = styled.input``;
 
-const Button = styled.button`
+export const Button = styled.button`
   font-family: 'Roboto', sans-serif;
   outline: 0;
   background: #5b08a7;
@@ -41,18 +41,18 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-const ButtonBlock = styled(Button)`
+export const ButtonBlock = styled(Button)`
   width: 100%;
 `;
 
-const Message = styled.p`
+export const Message = styled.p`
   margin: 15px 0 0;
   color: #b3b3b3;
   font-size: 16px;
   text-align: center;
 `;
 
-const MessageLink = styled(Link)`
+export const MessageLink = styled(Link)`
   color: #5b08a7;
   text-decoration: none;
 `;
