@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { Navigate, createBrowserRouter } from 'react-router-dom';
 import Login from './page/logout/login';
 import SignUp from './page/logout/sign-up';
 import Users from './page/login/users';
@@ -7,9 +7,12 @@ import Home from './page/logout/home';
 import Root from './page/root';
 import Main from './page/login/main';
 import Dashboard from './page/login/dashboard';
+import useLogin, { ILoginCheck } from './hooks/useLogin';
 
 const Router = () => {
-  const loginRoute = createBrowserRouter([
+  const { login } = useLogin() as ILoginCheck;
+  localStorage.setItem('Login', JSON.stringify(login));
+  const logoutRoute = createBrowserRouter([
     {
       path: '/',
       element: <Root />,
@@ -27,6 +30,7 @@ const Router = () => {
           element: <SignUp />,
         },
       ],
+      errorElement: <Navigate to="/" />,
     },
     {
       path: '*',
@@ -34,13 +38,17 @@ const Router = () => {
     },
   ]);
 
-  const logoutRoute = createBrowserRouter([
+  const loginRoute = createBrowserRouter([
     {
       path: '/',
-      element: <Root />,
+      element: login?.currentUser ? <Root /> : <Navigate to="/" />,
       children: [
         {
           path: '',
+          element: <Navigate to="/main" />,
+        },
+        {
+          path: 'main',
           element: <Main />,
         },
         {

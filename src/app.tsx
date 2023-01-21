@@ -1,12 +1,13 @@
 import { RouterProvider } from 'react-router-dom';
 import Router from './router';
+import useLogin, { ILoginCheck } from './hooks/useLogin';
 
 function App() {
+  const { login } = useLogin() as ILoginCheck;
   const { loginRoute, logoutRoute } = Router();
-  const check = true;
   return (
     <>
-      <RouterProvider router={check ? loginRoute : logoutRoute} />
+      <RouterProvider router={login?.currentUser ? loginRoute : logoutRoute} />
     </>
   );
 }
