@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import { authClient, unAuthClient } from '../../request-method';
-import { ButtonBlock, Container, Form, Input, Message, MessageLink, Title } from './login';
+import { unAuthClient } from '../../request-method';
+import { ButtonBlock, Container, Form, Input, Message, MessageLink, Title, ErrorText } from './login';
 import { useForm } from 'react-hook-form';
 
 interface IForm {
@@ -69,42 +69,46 @@ const SignUp = () => {
           type="text"
           placeholder="Full Name"
           {...register('name', {
-            required: 'Full Name is required',
+            required: '이름을 작성 해 주세요.',
           })}
         />
+        {errors?.name?.message && <ErrorText>{errors.name.message}</ErrorText>}
         <Input
           type="email"
           placeholder="Email"
           {...register('email', {
-            required: 'Email is required',
+            required: '이메일을 작성 해 주세요.',
             pattern: {
               value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-              message: 'Invalid email address',
+              message: '이메일 형식이 아닙니다.',
             },
           })}
         />
+        {errors?.email?.message && <ErrorText>{errors.email.message}</ErrorText>}
         <Input
           type="password"
           placeholder="Password"
           {...register('password', {
-            required: 'Password is required',
+            required: '비밀번호를 작성 해 주세요.',
             minLength: {
               value: 6,
-              message: 'Password must have at least 6 characters',
+              message: '6자리 이상 작성 해 주세요.',
             },
           })}
         />
+        {errors?.password?.message && <ErrorText>{errors.password.message}</ErrorText>}
         <Input
           type="password"
           placeholder="Confirm Password"
           {...register('confirmPassword', {
-            required: 'Confirm Password is required',
+            required: '확인 비밀번호를 작성 해 주세요.',
             minLength: {
               value: 6,
-              message: 'Confirm Password must have at least 6 characters',
+              message: '6자리 이상 작성 해 주세요.',
             },
           })}
         />
+        {errors?.confirmPassword?.message && <ErrorText>{errors.confirmPassword.message}</ErrorText>}
         <ButtonBlock>Sign up</ButtonBlock>
         <Message>
           Already Registered? <MessageLink to="/login">Sign in</MessageLink>

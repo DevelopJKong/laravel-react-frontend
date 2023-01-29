@@ -19,10 +19,6 @@ const Router = () => {
       children: [
         {
           path: '',
-          element: <Home />,
-        },
-        {
-          path: 'login',
           element: <Login />,
         },
         {

@@ -1,6 +1,16 @@
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { unAuthClient } from '../../request-method';
+import { useState } from 'react';
+import { ILoginCheck } from '../../hooks/useLogin';
+import useLogin from '../../hooks/useLogin';
+
+interface IForm {
+  email: string;
+  password: string;
+  extraServerError?: string;
+}
 
 export const Container = styled.div`
   height: 90vh;
@@ -57,44 +67,80 @@ export const MessageLink = styled(Link)`
   text-decoration: none;
 `;
 
+export const ErrorText = styled.p`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 10px;
+  margin-bottom: 20px;
+  color: red;
+`;
+
 const Login = () => {
   const {
     register,
     handleSubmit,
     clearErrors,
+    setError,
     formState: { errors },
-  } = useForm({
+  } = useForm<IForm>({
     mode: 'onChange',
   });
-
-  const onSubmit = (data: any) => {};
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const { setLogin } = useLogin() as ILoginCheck;
+  const onValid = async (data: IForm) => {
+    try {
+      const { email, password } = data;
+      const { data: userData } = await unAuthClient.post('/login', { email, password });
+      if (!userData.ok) {
+        setErrorMessage(userData.message);
+        throw new Error('extraServerError');
+      }
+      setLogin({
+        currentUser: userData.user.email,
+        token: userData.token,
+        refreshToken: '',
+        isFetching: false,
+        error: false,
+      });
+    } catch (error) {
+      const { message }: any = error;
+      if (message === 'extraServerError') {
+        setError('extraServerError', { message: errorMessage });
+      }
+    }
+  };
 
   return (
     <Container>
       <Title>LOGIN</Title>
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      <Form onSubmit={handleSubmit(onValid)} onClick={() => clearErrors()}>
         <Input
           type="email"
           placeholder="Email"
           {...register('email', {
-            required: 'Email is required',
+            required: '이메일을 입력 해 주세요.',
             pattern: {
               value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-              message: 'Invalid email address',
+              message: '이메일 형식이 아닙니다.',
             },
           })}
         />
+        {errors?.email?.message && <ErrorText>{errors?.email?.message}</ErrorText>}
         <Input
           type="password"
           placeholder="Password"
           {...register('password', {
-            required: 'Password is required',
+            required: '비밀번호를 입력 해 주세요.',
             minLength: {
               value: 6,
-              message: 'Password must have at least 6 characters',
+              message: '6자리 이상 입력 해 주세요.',
             },
           })}
         />
+        {errors?.password?.message && <ErrorText>{errors?.password?.message}</ErrorText>}
+        {errors?.extraServerError?.message && <ErrorText>{errors?.extraServerError?.message}</ErrorText>}
         <ButtonBlock>Login</ButtonBlock>
         <Message>
           Not registered? <MessageLink to="/sign-up">Create an account</MessageLink>
