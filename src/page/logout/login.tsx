@@ -9,6 +9,7 @@ import useLogin from '../../hooks/useLogin';
 interface IForm {
   email: string;
   password: string;
+  wrongInfo?: string;
   extraServerError?: string;
 }
 
@@ -94,8 +95,7 @@ const Login = () => {
       const { email, password } = data;
       const { data: userData } = await unAuthClient.post('/login', { email, password });
       if (!userData.ok) {
-        setErrorMessage(userData.message);
-        throw new Error('extraServerError');
+        throw new Error(userData.error);
       }
       setLogin({
         currentUser: userData.user.email,
@@ -106,8 +106,14 @@ const Login = () => {
       });
     } catch (error) {
       const { message }: any = error;
-      if (message === 'extraServerError') {
-        setError('extraServerError', { message: errorMessage });
+      switch (message) {
+        case 'wrongInfo':
+          setError('wrongInfo', { message });
+          break;
+
+        default:
+          setError('extraServerError', { message });
+          break;
       }
     }
   };
