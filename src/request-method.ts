@@ -46,3 +46,8 @@ authClient.interceptors.response.use(
     return Promise.reject(error);
   },
 );
+
+export const getUsers = async () => {
+  const { data } = await authClient.get('/user');
+  return data;
+};

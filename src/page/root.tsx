@@ -38,7 +38,7 @@ const MainContent = styled.main`
   padding: 2rem;
 `;
 
-const HeaderLink = styled.a`
+const HeaderLink = styled(Link)`
   text-decoration: none;
   padding: 0.75rem 1.5rem;
   color: #212121;
@@ -68,7 +68,7 @@ const Root = () => {
             <div>Header</div>
             <div>
               <span>{login.currentUser}</span>
-              <HeaderLink href={'#'} onClick={onLogout}>
+              <HeaderLink to="/" onClick={onLogout}>
                 Logout
               </HeaderLink>
             </div>

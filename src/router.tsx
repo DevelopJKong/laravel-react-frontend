@@ -41,21 +41,22 @@ const Router = () => {
       children: [
         {
           path: '',
-          element: <Navigate to="/main" />,
+          element: <Navigate to="/users" />,
         },
         {
-          path: 'main',
-          element: <Main />,
+          path: 'users',
+          element: <Users />,
         },
         {
           path: 'dashboard',
           element: <Dashboard />,
         },
         {
-          path: 'users',
-          element: <Users />,
+          path: '*',
+          element: <Navigate to="/" />,
         },
       ],
+      errorElement: <NotFound />,
     },
     {
       path: '*',
