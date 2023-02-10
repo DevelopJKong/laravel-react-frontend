@@ -89,7 +89,7 @@ const Login = () => {
     mode: 'onChange',
   });
   const [errorMessage, setErrorMessage] = useState<string>('');
-  const { setLogin } = useLogin() as ILoginCheck;
+  const { login, setLogin } = useLogin() as ILoginCheck;
   const onValid = async (data: IForm) => {
     try {
       const { email, password } = data;
@@ -104,15 +104,15 @@ const Login = () => {
         isFetching: false,
         error: false,
       });
-    } catch (error) {
-      const { message }: any = error;
+    } catch (error: any) {
+      const { message } = error;
       switch (message) {
         case 'wrongInfo':
-          setError('wrongInfo', { message });
+          setError('wrongInfo', { message: error?.response?.data?.message });
           break;
 
         default:
-          setError('extraServerError', { message });
+          setError('extraServerError', { message: error?.response?.data?.message });
           break;
       }
     }
@@ -146,6 +146,7 @@ const Login = () => {
           })}
         />
         {errors?.password?.message && <ErrorText>{errors?.password?.message}</ErrorText>}
+        {errors?.wrongInfo?.message && <ErrorText>{errors?.wrongInfo?.message}</ErrorText>}
         {errors?.extraServerError?.message && <ErrorText>{errors?.extraServerError?.message}</ErrorText>}
         <ButtonBlock>Login</ButtonBlock>
         <Message>

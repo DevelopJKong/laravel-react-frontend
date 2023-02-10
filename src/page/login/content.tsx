@@ -1,6 +1,5 @@
 import { Outlet } from 'react-router-dom';
-
-const main = () => {
+const Content = () => {
   return (
     <div>
       <Outlet />
@@ -8,4 +7,4 @@ const main = () => {
   );
 };
 
-export default main;
+export default Content;

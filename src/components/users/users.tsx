@@ -19,6 +19,7 @@ const Users = () => {
       }),
     {
       onSuccess(data) {
+        console.log(data);
         setUsers(data);
       },
     },
