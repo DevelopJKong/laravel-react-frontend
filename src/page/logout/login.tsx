@@ -104,6 +104,8 @@ const Login = () => {
         isFetching: false,
         error: false,
       });
+
+      localStorage.setItem('Login', JSON.stringify(userData));
     } catch (error) {
       const { message }: any = error;
       switch (message) {

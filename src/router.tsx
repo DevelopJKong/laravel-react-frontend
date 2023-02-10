@@ -1,17 +1,13 @@
 import { Navigate, createBrowserRouter } from 'react-router-dom';
 import Login from './page/logout/login';
 import SignUp from './page/logout/sign-up';
-import Users from './page/login/users';
+import Users from './page/login/users/users';
 import NotFound from './page/not-found';
-import Home from './page/logout/home';
 import Root from './page/root';
-import Main from './page/login/main';
 import Dashboard from './page/login/dashboard';
-import useLogin, { ILoginCheck } from './hooks/use-login-hook';
+import UserForm from './page/login/users/user-form';
 
 const Router = () => {
-  const { login } = useLogin() as ILoginCheck;
-  localStorage.setItem('Login', JSON.stringify(login));
   const logoutRoute = createBrowserRouter([
     {
       path: '/',
@@ -37,7 +33,7 @@ const Router = () => {
   const loginRoute = createBrowserRouter([
     {
       path: '/',
-      element: login?.token ? <Root /> : <Navigate to="/" />,
+      element: <Root />,
       children: [
         {
           path: '',
@@ -46,6 +42,14 @@ const Router = () => {
         {
           path: 'users',
           element: <Users />,
+        },
+        {
+          path: 'users/new',
+          element: <UserForm key={'userCreate'} />,
+        },
+        {
+          path: 'users/:id',
+          element: <UserForm key={'userUpdate'} />,
         },
         {
           path: 'dashboard',

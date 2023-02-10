@@ -3,8 +3,9 @@ import Router from './router';
 import useLogin, { ILoginCheck } from './hooks/use-login-hook';
 
 function App() {
-  const { login } = useLogin() as ILoginCheck;
   const { loginRoute, logoutRoute } = Router();
+  const { login } = useLogin() as ILoginCheck;
+  localStorage.setItem('Login', JSON.stringify(login));
   return (
     <>
       <RouterProvider router={login?.token ? loginRoute : logoutRoute} />

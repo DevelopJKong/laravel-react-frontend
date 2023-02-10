@@ -16,13 +16,13 @@ authClient.interceptors.request.use(
     if (!token) throw new Error('LocalStorage is empty');
 
     const userToken = JSON.parse(token)?.token;
-    const userRefreshToken = JSON.parse(token)?.refreshToken;
+    // const userRefreshToken = JSON.parse(token)?.refreshToken;
 
     // ! Authorization vs token
     if (userToken) {
       if (config.headers) {
-        config.headers.token = `Bearer ${userToken}`;
-        config.headers.refresh_token = `Bearer ${userRefreshToken}`; // eslint-disable-line
+        config.headers['Authorization'] = `Bearer ${userToken}`;
+        // config.headers.refresh_token = `Bearer ${userRefreshToken}`; // eslint-disable-line
       }
       return config;
     } else {
@@ -48,6 +48,10 @@ authClient.interceptors.response.use(
 );
 
 export const getUsers = async () => {
-  const { data } = await authClient.get('/user');
+  const { data } = await authClient.get('/users');
   return data;
+};
+
+export const deleteUser = async (id: number) => {
+  return await authClient.delete(`/users/${id}`);
 };

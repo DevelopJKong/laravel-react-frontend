@@ -5,6 +5,7 @@ import App from './app';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { RecoilRoot } from 'recoil';
+import '../index.css';
 
 const queryClient = new QueryClient();
 
