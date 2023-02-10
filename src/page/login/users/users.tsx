@@ -62,6 +62,7 @@ const Users = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const { setLogin, logout } = useLogin() as ILoginCheck;
+  const [extraError, setExtraError] = useState('');
 
   const { isLoading } = useQuery(
     'getUsers',
@@ -73,7 +74,6 @@ const Users = () => {
       }),
     {
       onSuccess({ data, links, meta }) {
-        1;
         // console.log(links);
         // console.log(meta);
         setUsers(data);
@@ -85,7 +85,12 @@ const Users = () => {
     if (!window.confirm('Are you sure you want to delete this user?')) {
       return;
     }
-    await deleteUser(user.id);
+    try {
+      await deleteUser(user.id);
+    } catch (error) {
+      console.error(error);
+      setExtraError('Something went wrong.');
+    }
   };
 
   return (
@@ -115,8 +120,8 @@ const Users = () => {
             </tbody>
           ) : (
             <tbody>
-              {users.map((u: IUser) => (
-                <tr>
+              {users.map((u: IUser, index: number) => (
+                <tr key={index}>
                   <td>{u.id}</td>
                   <td>{u.name}</td>
                   <td>{u.email}</td>

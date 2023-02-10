@@ -94,6 +94,10 @@ const SignUp = () => {
               value: 6,
               message: '6자리 이상 작성 해 주세요.',
             },
+            pattern: {
+              value: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{6,}$/,
+              message: '비밀번호는 숫자, 영문 대소문자, 특수문자를 포함해야 합니다.',
+            },
           })}
         />
         {errors?.password?.message && <ErrorText>{errors.password.message}</ErrorText>}

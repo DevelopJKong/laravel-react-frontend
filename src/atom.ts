@@ -28,3 +28,8 @@ export const errorMessageState = atom<string>({
   key: `Error${uuidv4()}`,
   default: '',
 });
+
+export const notificationState = atom<string>({
+  key: `Notification${uuidv4()}`,
+  default: '',
+});

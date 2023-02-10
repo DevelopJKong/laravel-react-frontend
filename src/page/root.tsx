@@ -1,6 +1,9 @@
 import { Outlet, Link } from 'react-router-dom';
 import useLogin, { ILoginCheck } from '../hooks/use-login-hook';
 import styled from 'styled-components';
+import { useRecoilState } from 'recoil';
+import { notificationState } from '../atom';
+import { useEffect } from 'react';
 
 const Container = styled.div`
   display: flex;
@@ -49,11 +52,31 @@ const HeaderLink = styled(Link)`
   }
 `;
 
+const Notification = styled.div.attrs(_props => {
+  return {
+    className: 'notification',
+  };
+})``;
+
+
+
+
+
 const Root = () => {
   const { login, setLogin, logout } = useLogin() as ILoginCheck;
+  const [notification, setNotification] = useRecoilState(notificationState);
+
   const onLogout = () => {
     setLogin(logout);
   };
+
+  useEffect(() => {
+    if (notification) {
+      setTimeout(() => {
+        setNotification('');
+      }, 3000);
+    }
+  }, [notification]);
   return (
     <Container>
       {login?.token && (
@@ -77,6 +100,7 @@ const Root = () => {
         <MainContent>
           <Outlet />
         </MainContent>
+        {notification && <Notification>{notification}</Notification>}
       </Content>
     </Container>
   );

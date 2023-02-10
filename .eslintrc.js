@@ -4,21 +4,37 @@ module.exports = {
     project: 'tsconfig.json',
     tsconfigRootDir: __dirname,
     sourceType: 'module',
+    ecmaFeatures: {
+      jsx: true,
+    },
   },
   plugins: ['react', 'react-hooks', '@typescript-eslint/eslint-plugin', 'prettier'],
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
+    'airbnb',
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
   ],
   root: true,
   env: {
-    node: true,
-    jest: true,
+    browser: true,
+    es2021: true,
   },
   ignorePatterns: ['.eslintrc.js', 'node_modules/', 'dist/', 'build/', 'coverage/'],
   rules: {
+    'prettier/prettier': [
+      'error',
+      {
+        tabWidth: 2,
+        semi: true,
+        printWidth: 130,
+        singleQuote: true,
+        trailingComma: 'all',
+        bracketSpacing: true,
+        arrowParens: 'avoid',
+      },
+    ],
     'react/react-in-jsx-scope': 'off', // ! react import 안해도 에러 안뜨게 함
     'spaced-comment': 'warn', // ! 주석에 공백을 사용하면 경고를 발생시킵니다.
     'no-debugger': 'warn', // ! debugger를 사용하면 경고를 발생시킵니다.

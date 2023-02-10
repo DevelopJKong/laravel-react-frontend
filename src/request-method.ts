@@ -1,6 +1,21 @@
 import { BASE_URL, HTTP_STATUS } from './components/common/constants/global.constants';
 import axios from 'axios';
 
+interface IUser {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+  password_confirmation: string;
+}
+
+interface ICreateUser {
+  name: string;
+  email: string;
+  password: string;
+  password_confirmation: string;
+}
+
 export const authClient = axios.create({
   baseURL: BASE_URL,
 });
@@ -52,6 +67,19 @@ export const getUsers = async () => {
   return data;
 };
 
+export const getUser = async (id: number) => {
+  const { data } = await authClient.get(`/users/${id}`);
+  return data;
+};
+
 export const deleteUser = async (id: number) => {
   return await authClient.delete(`/users/${id}`);
+};
+
+export const updateUser = async (id: number, user: IUser) => {
+  return await authClient.put(`/users/${id}`, user);
+};
+
+export const createUser = async (user: ICreateUser) => {
+  return await authClient.post('/users', user);
 };
