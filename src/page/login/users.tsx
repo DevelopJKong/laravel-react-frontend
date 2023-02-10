@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { getUsers } from '../../request-method';
-import { ILoginCheck } from '../../hooks/useLogin';
-import useLogin from '../../hooks/useLogin';
+import { ILoginCheck } from '../../hooks/use-login-hook';
+import useLogin from '../../hooks/use-login-hook';
 
 const Users = () => {
   const [users, setUsers] = useState([]);

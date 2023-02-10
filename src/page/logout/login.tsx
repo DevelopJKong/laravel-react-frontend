@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { unAuthClient } from '../../request-method';
 import { useState } from 'react';
-import { ILoginCheck } from '../../hooks/useLogin';
-import useLogin from '../../hooks/useLogin';
+import { ILoginCheck } from '../../hooks/use-login-hook';
+import useLogin from '../../hooks/use-login-hook';
 
 interface IForm {
   email: string;
